@@ -7,7 +7,11 @@ export class EitCounter extends LitElement {
                 display: block;
             }
             h2{
+                color:blue;
+            }
+            span{
                 color:red;
+                font-size:15px;
             }
             div{
                 display:flex;
@@ -22,33 +26,47 @@ export class EitCounter extends LitElement {
                 color:#FFF;
                 font-weight:900
             }
+            input{
+                width:50px;
+
+            }
         `
     ];
     
     static properties={
-        counter:{type:Number}
+        counter:{type:Number},
+        quantity:{type:Number},
     }
     constructor(){
         super();
-        // this.counter=0;
+    }
+    get quantity(){
+        return parseInt(this.renderRoot.querySelector("#quantity").value);
     }
     add(){
-        const counter=this.renderRoot?.querySelector('#counter')??null;
-        this.counter++;
-        counter.value=this.counter;
+        if(!this.quantity){
+            this.counter++;
+            return;
+        }
+        this.counter+=this.quantity;
     }
     subtract(){
-        const counter=this.renderRoot?.querySelector('#counter')??null;
-        this.counter--;
-        counter.value=this.counter;
+        if(!this.quantity){
+            this.counter--;
+            return;
+        }
+        this.counter-=this.quantity;
     }
     render() {
         return html`
-            <h2>Mi contador</h2>
+            <h2>Counter <span>if the input value is 0, the counter will increase by 1</span></h2>
             <div>
-                <button @click=${this.subtract}>-1</button>
+                <button @click=${(this.subtract)}>Subtract</button>
                 <p id="counter">${this.counter}</p>
-                <button @click=${this.add}>+1</button>
+                <button @click=${this.add}>Add</button>
+                <p>
+                    <input type="number" id="quantity" min="0" value="0">
+                </p>
             </div>
         `;
     }
