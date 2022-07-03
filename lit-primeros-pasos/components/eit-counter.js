@@ -1,11 +1,11 @@
 import { LitElement, html, css } from 'lit';
-import { WiredButton } from "wired-elements";
+import { WiredButton, WiredCard,WiredInput, WiredSlider } from "wired-elements";
 
 export class EitCounter extends LitElement {
     static styles = [
         css`
             :host {
-                display: block;
+                display: inline-block;
             }
             h2{
                 color:blue;
@@ -19,18 +19,6 @@ export class EitCounter extends LitElement {
                 flex-direction:row;
                 justify-content: space-around;
             }
-            button{
-                padding: 10px 20px;
-                background-color:#39de;
-                border: 1px solid #39de;
-                border-radius:5px;
-                color:#FFF;
-                font-weight:900
-            }
-            input{
-                width:50px;
-
-            }
         `
     ];
     
@@ -40,35 +28,45 @@ export class EitCounter extends LitElement {
     }
     constructor(){
         super();
+        this.quantity=0;
     }
-    get quantity(){
+    get getquantity(){
         return parseInt(this.renderRoot.querySelector("#quantity").value);
     }
     add(){
-        if(!this.quantity){
+        if(this.getquantity===0){
             this.counter++;
             return;
         }
-        this.counter+=this.quantity;
+        this.counter+=this.getquantity;
     }
     subtract(){
-        if(!this.quantity){
+        console.log(typeof this.quantity);
+        if(this.getquantity===0){
             this.counter--;
             return;
         }
-        this.counter-=this.quantity;
+        this.counter-=this.getquantity;
+    }
+    doChangeQuantity(e){
+        this.quantity=e.detail.value;
     }
     render() {
         return html`
-            <h2>Counter <span>if the input value is 0, the counter will increase by 1</span></h2>
-            <div>
-                <wired-button @click=${this.subtract}>Substract</wired-button>
-                <p id="counter">${this.counter}</p>
-                <wired-button @click=${this.add}>Add</wired-button>
+            <wired-card elevation="3">
+                <h2>Counter <span>if the input value is 0, the counter will increase by 1</span></h2>
+                <div>
+                    <wired-button @click=${this.subtract}>Substract</wired-button>
+                    <p id="counter">${this.counter}</p>
+                    <wired-button @click=${this.add}>Add</wired-button>
+                    <p>
+                        <wired-input type="number" id="quantity" min="0" value="0" .value="${this.quantity}"></wired-input>
+                    </p>
+                </div>
                 <p>
-                    <input type="number" id="quantity" min="0" value="0">
+                    <wired-slider value="0" min="0" max="20" step="2" @change=${this.doChangeQuantity}></wired-slider>
                 </p>
-            </div>
+            </wired-card>
         `;
     }
 }
