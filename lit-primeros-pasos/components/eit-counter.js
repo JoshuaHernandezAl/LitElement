@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import { WiredButton } from "wired-elements";
 
 export class EitCounter extends LitElement {
     static styles = [
@@ -61,9 +62,9 @@ export class EitCounter extends LitElement {
         return html`
             <h2>Counter <span>if the input value is 0, the counter will increase by 1</span></h2>
             <div>
-                <button @click=${(this.subtract)}>Subtract</button>
+                <wired-button @click=${this.subtract}>Substract</wired-button>
                 <p id="counter">${this.counter}</p>
-                <button @click=${this.add}>Add</button>
+                <wired-button @click=${this.add}>Add</wired-button>
                 <p>
                     <input type="number" id="quantity" min="0" value="0">
                 </p>
