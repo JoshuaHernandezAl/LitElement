@@ -41,7 +41,6 @@ export class EitCounter extends LitElement {
         this.counter+=this.getquantity;
     }
     subtract(){
-        console.log(typeof this.quantity);
         if(this.getquantity===0){
             this.counter--;
             return;
